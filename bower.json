@@ -1,0 +1,25 @@
+{
+  "name": "Cache",
+  "main": "Cache.js",
+  "authors": [
+    "dimabresky <dimabresky@gmail.com>"
+  ],
+  "description": "Cache data of html page",
+  "keywords": [
+    "cache",
+    "javascript cache"
+    "html cache"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "qunit": "^2.4.0"
+  }
+}
