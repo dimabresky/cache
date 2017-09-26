@@ -2,180 +2,37 @@
 
     'use strict';
 
-    var currentTestName = '', store, DB;
+    var _Cache = new Cache();
+    var currentTestName = 'Установка значения в кеш';
 
-    QUnit.module('IDBWrapper тест');
+    QUnit.module('Cache тест');
 
-    DB = new IDBWrapper('DBTEST', null, function () {
+    _Cache.set("key", "value");
 
-        this.createStore({
-            name: 'test',
-            fields: [{
-                code: 'name',
-                uniq: false
-            }, {
-                code: 'last_name',
-                uniq: false
-            }, {
-                code: 'email',
-                uniq: true
-            }]
-        });
-    });
-
-    DB.connect()
-    .then(function () {
-
-        currentTestName = "Создание базы данных DBTEST и создание хранилища test";
-
+    if (_Cache.get("key") === "value") {
         QUnit.test( currentTestName, function( assert ) {
             assert.ok( true, "выполнен" );
         });
+    } else {
+        QUnit.test( currentTestName, function( assert ) {
+            assert.notOk( true, "не выполнен");
+        });
+    }
 
-        currentTestName = "Переподключение к БД и создание хранилища test2";
+    currentTestName = 'Удаление значения из кеша';
 
-            return DB.ceateNewStore({
-                name: 'test2',
-                fields: [{
-                    code: 'country',
-                    uniq: false
-                }, {
-                    code: 'city',
-                    uniq: false
-                }]
-            });
+    _Cache.remove("key");
 
-    })
-    .then(function () {
-
+    if (_Cache.get("key") === "undefined") {
         QUnit.test( currentTestName, function( assert ) {
             assert.ok( true, "выполнен" );
         });
-
-        currentTestName = "Добавление записи в хранилище test (метод add)";
-
-        store = DB.store('test');
-
-        return store.add({
-
-            name: 'Jhon',
-            last_name: 'Smith',
-            email: 'smith@gmail.com'
-
-        });
-
-    }).then(function () {
-
+    } else {
         QUnit.test( currentTestName, function( assert ) {
-            assert.ok( true, "выполнен" );
+            assert.notOk( true, "не выполнен");
         });
+    }
 
-        currentTestName = "Обновление записи в хранилище test (метод update)";
+    
 
-        return store.update(1, {
-
-            name: 'Jacob',
-            last_name: 'Smith',
-            email: 'smith@gmail.com'
-
-        });
-
-    }).then(function () {
-
-        QUnit.test( currentTestName, function( assert ) {
-            assert.ok( true, "выполнен" );
-        });
-
-        currentTestName = "Получение записи из хранилища test (метод get)";
-
-        return store.get();
-
-    }).then(function (data) {
-
-        QUnit.test( currentTestName, function( assert ) {
-            assert.ok( data[0].id == 1 && data[0].name === 'Jacob', "выполнен" );
-        });
-
-        currentTestName = "Получение записи из хранилища test (метод where id = 1)";
-
-        return store.where('id').equal(1).get();
-
-    }).then(function (data) {
-
-        QUnit.test( currentTestName, function( assert ) {
-            assert.ok( data[0].id == 1 && data[0].name === 'Jacob', "выполнен" );
-        });
-
-        currentTestName = "Получение записи из хранилища test (метод where name = Jacob)";
-
-        return store.where('name').equal('Jacob').get();
-
-    }).then(function (data) {
-
-        QUnit.test( currentTestName, function( assert ) {
-            assert.ok( data[0].id == 1 && data[0].name === 'Jacob', "выполнен" );
-        });
-
-        currentTestName = "Удаление записи из хранилища test (метод delete where id = 1)";
-
-        return store.delete(1);
-    }).then(function () {
-
-        QUnit.test( currentTestName, function( assert ) {
-            assert.ok( true, "выполнен" );
-        });
-
-        currentTestName = "Получение списка хранилищ (test и test2)";
-
-        return new Promise(function (resolve, reject) {
-
-            var stores = DB.getStoresList();
-
-            if (stores.indexOf('test') !== -1 && stores.indexOf('test2') !== -1) {
-
-                return resolve(true);
-            } else {
-
-                return reject('Упс... Что - то потерялось');
-            }
-
-        });
-
-    }).then(function () {
-
-        QUnit.test( currentTestName, function( assert ) {
-            assert.ok( true, "выполнен" );
-        });
-
-        currentTestName = "Удаление хранилищ test и test2";
-
-        return DB.reconnect(function () {
-
-            DB.deleteStore('test');
-            DB.deleteStore('test2');
-
-            QUnit.test( currentTestName, function( assert ) {
-                assert.ok( true, "выполнен" );
-            });
-
-        });
-    }).then(function () {
-
-        currentTestName = "Удаление базыданных DBTEST";
-
-        return DB.deleteDatabase("DBTEST");
-    }).then(function () {
-
-        QUnit.test( currentTestName, function( assert ) {
-            assert.ok( true, "выполнен");
-        });
-
-    }).catch(function () {
-        QUnit.test( currentTestName, function( assert ) {
-            assert.notOk( true, "не выполнен (" + message + ")");
-        });
-    });
-
-
-
-}(IDBWrapper, QUnit);
+}(Cache, QUnit);

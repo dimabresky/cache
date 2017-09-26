@@ -33,7 +33,9 @@
      * @param       {Number} cacheTime
      * @constructor
      */
-    function Cache (cacheTime) {
+    var Cache = function (cacheTime) {
+
+        var that = this;
 
         /**
          * @param  {String} key
@@ -42,6 +44,15 @@
          */
         this.set = function (key, value) {
             cache[key] = value;
+        }
+
+        /**
+         * @param  {String} key
+         * @param  {String} value
+         * @return {undefined}
+         */
+        this.get = function (key) {
+            return cache[key];
         }
 
         /**
@@ -69,11 +80,11 @@
             var key;
             for (key in cache) {
                 if (cache.hasOwnProperty(key)) {
-                    this.remove(key);
+                    that.remove(key);
                 }
             }
         }, cacheTime || 24*60000);
-    }
+    };
 
     return Cache;
 
