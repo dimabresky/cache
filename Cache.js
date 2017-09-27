@@ -60,7 +60,7 @@
          * @return {undefined}
          */
         this.remove = function (key) {
-            cache[key] = "undefined";
+            cache[key] = undefined;
         }
 
         /**
@@ -71,7 +71,7 @@
          */
         this.getter = function (key, getter) {
 
-            Object.defineProperty(this.cache, key, {
+            Object.defineProperty(this, key, {
                 get: getter
             });
         };
