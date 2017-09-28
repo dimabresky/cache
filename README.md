@@ -6,57 +6,53 @@
 
 сохранения ссылок на DOMNodes:
 ```javascript
-<div id="some-id"></div>
 
-<script>
+var _cache = new Cache();
 
-    var _cache = new Cache();
+_cache.getter("some-id", function () {
 
-    _cache.getter("some-id", function () {
+    var cacheElement = _cache["some-id"];
 
-        var cacheElement = _cache["some-id"];
+    if (typeof cacheElement === "object") {
+        return cacheElement;
+    }
 
-        if (typeof cacheElement === "object") {
-            return cacheElement;
-        }
+    _cache.set("some-id", document.getElementById("some-id"));
+    return _cache.get("some-id");
+});
 
-        _cache.set("some-id", document.getElementById("some-id"));
-        return _cache.get("some-id");
-    });
+// при первом вызове получается ссылка на DOMNode и возвращается результат
+console.log(_cache["some-id"]);
 
-    // при первом вызове получается ссылка на DOMNode и возвращается результат
-    console.log(_cache["some-id"]);
+// при втором вызове результат возвращается из кеша
+console.log(_cache["some-id"]);
 
-    // при втором вызове результат возвращается из кеша
-    console.log(_cache["some-id"]);
-
-<script>
 ```
 
 cохранения результата выполнения асинхронных функций:
 ```javascript
 
-    var _cache = new Cache();
+var _cache = new Cache();
 
-    _cache.getter("async-result", function () {
+_cache.getter("async-result", function () {
 
-        var cacheElement = _cache["async-result"];
+    var cacheElement = _cache["async-result"];
 
-        if (typeof cacheElement !== "undefined") {
-            return cacheElement;
-        }
+    if (typeof cacheElement !== "undefined") {
+        return cacheElement;
+    }
 
-        setTimeout(function () {
-            _cache.set("async-result", "some result");
-        }, 500);
+    setTimeout(function () {
+        _cache.set("async-result", "some result");
+    }, 500);
 
-        return '';
-    });
+    return '';
+});
 
-    // при первом вызове вызове возвращается пустая строка
-    console.log(_cache["async-result"]);
+// при первом вызове вызове возвращается пустая строка
+console.log(_cache["async-result"]);
 
-    // при втором вызове возвращается результат работы асинхронной функции
-    console.log(_cache["async-result"]);
+// при втором вызове возвращается результат работы асинхронной функции
+console.log(_cache["async-result"]);
 
 ```
