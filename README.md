@@ -49,7 +49,7 @@ _cache.getter("async-result", function () {
     return '';
 });
 
-// при первом вызове вызове возвращается пустая строка
+// при первом вызове возвращается пустая строка
 console.log(_cache["async-result"]);
 
 setTimeout (function () {
