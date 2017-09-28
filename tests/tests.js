@@ -83,19 +83,24 @@
 
     if (typeof _Cache.key3 === "undefined") {
 
-      setTimeout(function () {
+      QUnit.test( currentTestName, function( assert ) {
 
-        if (_Cache.key3 === "async value of cache element") {
-          QUnit.test( currentTestName, function( assert ) {
-              assert.ok( true, "выполнен" );
-          });
-        } else {
-          QUnit.test( currentTestName, function( assert ) {
-              assert.notOk( true, "не выполнен (не равен 'async value of cache element')");
-          });
-        }
+        var done = assert.async();
+        setTimeout(function () {
 
-      }, 1000);
+          if (_Cache.key3 === "async value of cache element") {
+
+            assert.ok( true, "выполнен" );
+
+          } else {
+
+            assert.notOk( true, "не выполнен (не равен 'async value of cache element')");
+          }
+
+          done();
+
+        }, 1000);
+      });
 
     } else {
 
