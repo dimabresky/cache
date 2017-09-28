@@ -52,7 +52,9 @@ _cache.getter("async-result", function () {
 // при первом вызове вызове возвращается пустая строка
 console.log(_cache["async-result"]);
 
-// при втором вызове возвращается результат работы асинхронной функции
-console.log(_cache["async-result"]);
+setTimeout (function () {
+    // при втором вызове возвращается результат работы асинхронной функции
+    console.log(_cache["async-result"]);
+}, 1000);
 
 ```
