@@ -49,7 +49,7 @@
         /**
          * @param  {String} key
          * @param  {String} value
-         * @return {undefined}
+         * @return {mixed}
          */
         this.get = function (key) {
             return cache[key];
@@ -76,6 +76,7 @@
             });
         };
 
+        // clear cache
         setTimeout(function () {
             var key;
             for (key in cache) {
@@ -83,7 +84,7 @@
                     _this.remove(key);
                 }
             }
-        }, cacheTime || 24*60000);
+        }, cacheTime || 24*60*60000);
     };
 
     return Cache;
