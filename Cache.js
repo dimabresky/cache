@@ -35,7 +35,7 @@
      */
     var Cache = function (cacheTime) {
 
-        var that = this;
+        var _this = this;
 
         /**
          * @param  {String} key
@@ -80,7 +80,7 @@
             var key;
             for (key in cache) {
                 if (cache.hasOwnProperty(key)) {
-                    that.remove(key);
+                    _this.remove(key);
                 }
             }
         }, cacheTime || 24*60000);
