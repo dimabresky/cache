@@ -58,3 +58,5 @@ setTimeout (function () {
 }, 1000);
 
 ```
+
+Простестировано с Google Chrome 61.0.x
