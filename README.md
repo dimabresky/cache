@@ -11,7 +11,7 @@ var _cache = new Cache();
 
 _cache.getter("some-id", function () {
 
-    var cacheElement = _cache.get("some-id");
+    var cacheElement = _cache["some-id"];
 
     if (typeof cacheElement === "object") {
         return cacheElement;
@@ -36,7 +36,7 @@ var _cache = new Cache();
 
 _cache.getter("async-result", function () {
 
-    var cacheElement = _cache.get("async-result");
+    var cacheElement = _cache["async-result"];
 
     if (typeof cacheElement !== "undefined") {
         return cacheElement;
@@ -59,4 +59,4 @@ setTimeout (function () {
 
 ```
 
-Простестировано с Google Chrome 61.0.x
+Простестировано с Google Chrome 60.0.x.x
