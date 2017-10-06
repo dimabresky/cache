@@ -35,7 +35,7 @@
      */
     var Cache = function (cacheTime) {
 
-        var that = this;
+        var _this = this;
 
         /**
          * @param  {String} key
@@ -49,7 +49,7 @@
         /**
          * @param  {String} key
          * @param  {String} value
-         * @return {undefined}
+         * @return {mixed}
          */
         this.get = function (key) {
             return cache[key];
@@ -76,14 +76,15 @@
             });
         };
 
+        // clear cache
         setTimeout(function () {
             var key;
             for (key in cache) {
                 if (cache.hasOwnProperty(key)) {
-                    that.remove(key);
+                    _this.remove(key);
                 }
             }
-        }, cacheTime || 24*60000);
+        }, cacheTime || 24*60*60000);
     };
 
     return Cache;
