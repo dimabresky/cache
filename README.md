@@ -59,4 +59,4 @@ setTimeout (function () {
 
 ```
 
-Простестировано с Google Chrome 60.0.x.x
+Простестировано с Google Chrome 61.0.x.x
